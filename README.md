@@ -7,7 +7,7 @@
 You can install `gmon` using pip:
 
 ```bash
-pip install gmon
+pip install git+https://github.com/AdamLouly/gmon
 ```
 
 ## Usage
