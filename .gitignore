@@ -1,0 +1,23 @@
+# Ignore compiled Python files
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Ignore virtual environment directories
+venv/
+env/
+*.egg-info/
+dist/
+build/
+
+# Ignore local development settings and temporary files
+*.log
+*.sqlite3
+
+# Ignore Jupyter Notebook checkpoints
+.ipynb_checkpoints/
+
+# Ignore user-specific settings
+.idea/
+.vscode/
