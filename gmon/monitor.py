@@ -1,9 +1,9 @@
 import subprocess
 import threading
 import time
-import argparse
 from termcolor import colored
 import sys
+import shutil
 
 # Global variables to track the peak memory
 peak_memory = 0.0
@@ -34,9 +34,18 @@ def monitor_gpu():
 def run_script(script_name):
     subprocess.run(script_name, shell=True)
 
+def check_nvidia_smi():
+    """Check if nvidia-smi is installed."""
+    return shutil.which("nvidia-smi") is not None
+
 def main():
     global stop_monitoring, peak_memory  # Declare the global flags and variables
 
+    # Check if nvidia-smi is installed
+    if not check_nvidia_smi():
+        print("Error: nvidia-smi is not installed. Please install it to use this tool.")
+        sys.exit(1)
+    
     # Get the script name from command-line arguments
     script_to_run = " ".join(sys.argv[1:])
 
