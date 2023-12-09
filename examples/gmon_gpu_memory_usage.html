@@ -1,0 +1,84 @@
+
+    <!DOCTYPE html>
+    <html>
+    <head>
+        <title>GMON GPU Memory Usage Graph</title>
+        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+        <style>
+            .hidden { display: none; }
+            button {                background-color: #4267B2; /* Facebook Blue */
+                color: white;
+                border: none;
+                padding: 10px 20px;
+                margin: 5px;
+                border-radius: 4px;
+                cursor: pointer;
+                transition: background-color 0.3s;
+            }
+            button:focus, button:hover {
+            background-color: #102757;
+            outline:none;
+            }
+            .container {
+            text-align:center;
+            }
+            .graph {
+            padding:20px 50px 50px 50px;
+            }
+        </style>
+    </head>
+    <body>
+        <div class="container">
+        <h1>GMON GPU Memory Usage Over Time (in GB)</h1>
+
+        <button onclick="showChart(0)">Show GPU 0</button>
+<button onclick="showChart(1)">Show GPU 1</button>
+<button onclick="showChart(2)">Show GPU 2</button>
+<button onclick="showChart(3)">Show GPU 3</button>
+        <div class="graph"><div id="chart-container0" class="chart-container"><canvas id="chart0" width="300" height="150"></canvas></div>
+<div id="chart-container1" class="chart-container"><canvas id="chart1" width="300" height="150"></canvas></div>
+<div id="chart-container2" class="chart-container"><canvas id="chart2" width="300" height="150"></canvas></div>
+<div id="chart-container3" class="chart-container"><canvas id="chart3" width="300" height="150"></canvas></div></div>
+
+        </div>
+        <script>
+            var dataSets = [[0.0, 0.00390625, 0.00390625, 0.015625, 0.32421875, 0.32421875, 0.32421875, 0.32421875, 0.32421875, 0.32421875, 0.32421875, 0.32421875, 0.32421875, 0.380859375, 0.41796875, 0.41796875, 0.41796875, 0.41796875, 0.416015625], [0.0, 0.00390625, 0.00390625, 0.00390625, 0.00390625, 0.00390625, 0.00390625, 0.00390625, 0.00390625, 0.00390625, 0.00390625, 0.00390625, 0.00390625, 0.00390625, 0.00390625, 0.00390625, 0.00390625, 0.00390625, 0.00390625], [0.0, 0.0009765625, 0.00390625, 0.00390625, 0.00390625, 0.00390625, 0.00390625, 0.00390625, 0.00390625, 0.00390625, 0.00390625, 0.00390625, 0.00390625, 0.00390625, 0.00390625, 0.00390625, 0.00390625, 0.00390625, 0.00390625], [0.0, 0.0, 0.00390625, 0.00390625, 0.00390625, 0.00390625, 0.00390625, 0.00390625, 0.00390625, 0.00390625, 0.00390625, 0.00390625, 0.00390625, 0.00390625, 0.00390625, 0.00390625, 0.00390625, 0.00390625, 0.00390625]];
+            var timeLabels = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19];
+            function showChart(gpuIndex) {
+                dataSets.forEach(function(_, index) {
+                    document.getElementById('chart-container' + index).style.display = index === gpuIndex ? 'block' : 'none';
+                });
+            }
+
+            dataSets.forEach(function(data, index) {
+                var ctx = document.getElementById('chart' + index).getContext('2d');
+                new Chart(ctx, {
+                    type: 'bar',
+                    data: {
+                        labels: timeLabels,
+                        datasets: [{
+                            label: 'GPU Memory ' + index,
+                            data: data,
+                            borderColor: 'rgb(75, 192, 192)',
+                            backgroundColor: 'rgba(0, 123, 255, 0.6)',
+                            tension: 0.1
+                        }]
+                    },
+                    options: {
+                        scales: {
+                            y: {
+                                beginAtZero: true,
+                                max: 16,
+                            }
+                        }
+                    }
+                });
+            });
+
+            // Initially show only the first chart
+            showChart(0);
+        </script>
+    </body>
+    <footer>Generated using <a target="_blank" href="https://github.com/AdamLouly/gmon">GMON</a></footer>
+    </html>
+    

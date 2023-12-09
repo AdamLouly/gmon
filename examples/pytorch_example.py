@@ -7,7 +7,7 @@ device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
 # Create a larger synthetic dataset
 np.random.seed(42)
-x_train = np.random.rand(1000000, 1)  # Generate 1 million data points
+x_train = np.random.rand(1000*1000, 1)  # Generate 1 million data points
 y_train = 2 * x_train + 1 + 0.1 * np.random.randn(1000000, 1)
 x_train = torch.tensor(x_train, dtype=torch.float32).to(device)
 y_train = torch.tensor(y_train, dtype=torch.float32).to(device)
@@ -26,7 +26,7 @@ model = LinearRegression().to(device)
 criterion = nn.MSELoss()
 optimizer = optim.SGD(model.parameters(), lr=0.01)
 
-num_epochs = 10000
+num_epochs = 100
 # Training loop
 for epoch in range(1, num_epochs):
     # Forward pass
